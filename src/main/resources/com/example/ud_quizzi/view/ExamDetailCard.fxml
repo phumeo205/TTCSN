@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.ud_quizzi.view.ExamDetailCardController"
+      alignment="TOP_CENTER" spacing="0"
+      style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);"
+      prefWidth="320" prefHeight="380">
+
+    <VBox alignment="CENTER" style="-fx-border-color: black; -fx-border-width: 0 0 2px 0; -fx-padding: 15; -fx-background-color: #f8f9fa;">
+        <Label text="Chi Tiết Bài Thi">
+            <font>
+                <Font name="Arial Bold" size="20.0"/>
+            </font>
+        </Label>
+    </VBox>
+
+    <VBox spacing="12" style="-fx-padding: 25;">
+        <HBox spacing="5">
+            <Label text="Mã đề thi:" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblExamID" text="..."/>
+        </HBox>
+
+        <HBox spacing="5">
+            <Label text="Tên đề thi:" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblExamName" text="..." wrapText="true"/>
+        </HBox>
+
+        <HBox spacing="5">
+            <Label text="Ngày tạo:" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblDate" text="..."/>
+        </HBox>
+
+        <HBox spacing="5">
+            <Label text="Tạo bởi:" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblAuthor" text="..."/>
+        </HBox>
+
+        <HBox spacing="5">
+            <Label text="Thời gian:" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblTime" text="..." style="-fx-text-fill: #e74c3c;"/>
+        </HBox>
+    </VBox>
+
+    <Region VBox.vgrow="ALWAYS"/>
+
+    <VBox alignment="CENTER" style="-fx-padding: 0 0 25 0;">
+        <Button text="Bắt đầu thi" onAction="#handleStartExam"
+                style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2px; -fx-font-weight: bold; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 8 25;"/>
+    </VBox>
+</VBox>

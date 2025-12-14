@@ -1,12 +1,17 @@
 package com.example.ud_quizzi.main;
 
+import com.example.ud_quizzi.dao.DatabaseConnection;
+import com.example.ud_quizzi.view.ManageUserController;
+import com.example.ud_quizzi.view.ResultListController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class LoginViewDemo extends Application {
+import java.sql.Connection;
+
+public class ResultListViewDemo extends Application {
 
     @Override
     public void start(Stage primaryStage) {
@@ -15,15 +20,23 @@ public class LoginViewDemo extends Application {
             FXMLLoader loader = new FXMLLoader();
 
             // 2️⃣ Chú ý đường dẫn: từ thư mục resources
-            loader.setLocation(getClass().getResource("/com/example/ud_quizzi/view/LoginScreen.fxml"));
+            loader.setLocation(getClass().getResource("/com/example/ud_quizzi/view/ResultListScreen.fxml"));
 
             // 3️⃣ Load FXML
             Parent root = loader.load();
 
+            // 2️⃣ Lấy controller
+            ResultListController controller = loader.getController();
+
+            // 3️⃣ Lấy Connection và truyền vào controller
+            Connection conn = DatabaseConnection.getConnection();
+            controller.setConnection(conn);
+
             // 4️⃣ Tạo Scene và hiển thị Stage
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Quizzi Login");
+            primaryStage.setTitle("Result List");
+            primaryStage.centerOnScreen();
             primaryStage.show();
 
         } catch (Exception e) {

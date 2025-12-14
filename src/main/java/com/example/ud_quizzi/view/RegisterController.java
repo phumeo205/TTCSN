@@ -29,11 +29,11 @@ public class RegisterController {
 
     private UserController userController;
 
-    private static final String DB_HOST = "LAPTOP";
-    private static final String DB_INSTANCE = "MSSQLSERVER01";
+    private static final String DB_HOST = "localhost";
+    private static final String DB_INSTANCE = "";
     private static final String DB_NAME = "UD_QUIZZI";
     private static final String DB_USER = "sa";
-    private static final String DB_PASSWORD = "@Nhd05122005";
+    private static final String DB_PASSWORD = "123456";
 
     @FXML
     private void initialize() {
@@ -44,11 +44,12 @@ public class RegisterController {
         // Kết nối DB
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://" + DB_HOST + "\\" + DB_INSTANCE +
-                    ";databaseName=" + DB_NAME + ";encrypt=true;trustServerCertificate=true;";
-            Connection conn = DriverManager.getConnection(url, DB_USER, DB_PASSWORD);
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=UD_QUIZZI;encrypt=false;trustServerCertificate=true;";
+            String user = "sa";          // hoặc user bạn đang dùng trong SSMS
+            String password = "123456"; // đổi thành mật khẩu thật
+            Connection conn = DriverManager.getConnection(url, user, password);
             userController = new UserController(conn);
-            System.out.println("✅ Kết nối CSDL thành công!");
+            System.out.println("Kết nối CSDL thành công!");
         } catch (Exception e) {
             e.printStackTrace();
             messageLabel.setText("Kết nối DB thất bại!");
@@ -100,22 +101,8 @@ public class RegisterController {
 
     @FXML
     public void handleBack(ActionEvent actionEvent) {
-        System.out.println("DEBUG: Back button clicked");
-        try {
-            Stage currentStage = (Stage) usernameField.getScene().getWindow();
-            currentStage.close();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/ud_quizzi/view/AdminScreen.fxml"));
-            Parent root = loader.load();
-            Stage adminStage = new Stage();
-            adminStage.setScene(new Scene(root));
-            adminStage.setTitle("Admin Screen");
-            adminStage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            messageLabel.setText("Lỗi load AdminScreen: " + e.getMessage());
-        }
+        Stage stage = (Stage) usernameField.getScene().getWindow();
+        stage.close();
     }
 
 

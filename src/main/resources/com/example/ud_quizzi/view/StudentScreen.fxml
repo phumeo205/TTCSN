@@ -1,24 +1,50 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<?xml version="1.0" encoding="UTF-8"?>
 
-<!--<?import javafx.scene.control.*?>-->
-<!--<?import javafx.scene.layout.*?>-->
-<!--<?import javafx.geometry.*?>-->
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
 
-<!--<VBox xmlns="http://javafx.com/javafx/17"-->
-<!--      xmlns:fx="http://javafx.com/fxml/1"-->
-<!--      fx:controller="com.example.ud_quizzi.view.StudentController"-->
-<!--      spacing="20" alignment="CENTER">-->
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.ud_quizzi.view.StudentController"
+      spacing="30" alignment="CENTER"
+      style="-fx-background-color: linear-gradient(to bottom right, #f0f4ff, #d9e4ff);">
 
-<!--    <Label text="TRANG CHỦ HỌC SINH" style="-fx-font-size: 24px; -fx-font-weight: bold;" />-->
+    <!-- Tiêu đề -->
+    <Label text="TRANG CHỦ HỌC SINH"
+           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2a3f5f;"
+           effect="$dropShadow">
+        <effect>
+            <DropShadow radius="3" offsetX="2" offsetY="2" color="#888888"/>
+        </effect>
+    </Label>
 
-<!--    <VBox spacing="15" alignment="CENTER">-->
-<!--        <Button text="Quản lí câu hỏi" onAction="#handleManageQuestions" prefWidth="200"/>-->
-<!--        <Button text="Quản lí đề thi" onAction="#handleManageExams" prefWidth="200"/>-->
-<!--        <Button text="Quản lí kết quả" onAction="#handleManageResults" prefWidth="200"/>-->
-<!--        <Button text="Đăng xuất" onAction="#handleLogout" prefWidth="200"/>-->
-<!--    </VBox>-->
+    <!-- Menu nút -->
+    <VBox spacing="20" alignment="CENTER">
+        <Button text="Chọn đề thi" onAction="#handleSelectTheExam" prefWidth="220"
+                style="-fx-background-color: #4a90e2; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10;">
+            <VBox.margin>
+                <Insets top="5" bottom="5"/>
+            </VBox.margin>
+        </Button>
 
-<!--    <padding>-->
-<!--        <Insets top="20" right="20" bottom="20" left="20"/>-->
-<!--    </padding>-->
-<!--</VBox>-->
+        <Button text="Xem điểm thi" onAction="#handleSeeTestScore" prefWidth="220"
+                style="-fx-background-color: #50e3c2; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10;">
+            <VBox.margin>
+                <Insets top="5" bottom="5"/>
+            </VBox.margin>
+        </Button>
+
+        <Button text="Đăng xuất" onAction="#handleLogout" prefWidth="220"
+                style="-fx-background-color: #d0021b; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10;">
+            <VBox.margin>
+                <Insets top="5" bottom="5"/>
+            </VBox.margin>
+        </Button>
+    </VBox>
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+</VBox>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ud_quizzi.view.TakingExamController"
+            prefWidth="900" prefHeight="600"
+            style="-fx-background-color: #f5f7fa;">
+
+    <!-- =================== TOP BAR =================== -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20"
+              style="-fx-background-color: linear-gradient(to right, #2c3e50, #34495e);
+                     -fx-padding: 15;
+                     -fx-border-color: #1f2a35;
+                     -fx-border-width: 0 0 2 0;">
+            <Label fx:id="lblExamTitle" text="Tên Bài Thi"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Label text="Thời gian còn lại:"
+                   style="-fx-font-size: 16px; -fx-text-fill: white;"/>
+
+            <Label fx:id="lblTimer" text="00:00"
+                   style="-fx-text-fill: #ffdd59;
+                          -fx-font-weight: bold;
+                          -fx-font-size: 24px;"/>
+        </HBox>
+    </top>
+
+    <!-- =================== BODY =================== -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 30;">
+            <Label fx:id="lblQuestionNumber" text="Câu 1:"
+                   style="-fx-font-weight: bold; -fx-text-fill: #2980b9; -fx-font-size: 20px;"/>
+
+            <Label fx:id="lblQuestionContent"
+                   text="Nội dung câu hỏi sẽ hiển thị ở đây..."
+                   wrapText="true"
+                   style="-fx-font-size: 18px;
+                          -fx-background-color: white;
+                          -fx-padding: 18;
+                          -fx-background-radius: 12;
+                          -fx-border-color: #dce1e3;
+                          -fx-border-radius: 12;
+                          -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 8, 0, 0, 2);"/>
+
+            <!-- Options -->
+            <VBox spacing="15" style="-fx-padding: 10 0 0 20;">
+                <RadioButton fx:id="radA" text="A. Option A" style="-fx-font-size: 16px;"/>
+                <RadioButton fx:id="radB" text="B. Option B" style="-fx-font-size: 16px;"/>
+                <RadioButton fx:id="radC" text="C. Option C" style="-fx-font-size: 16px;"/>
+                <RadioButton fx:id="radD" text="D. Option D" style="-fx-font-size: 16px;"/>
+            </VBox>
+        </VBox>
+    </center>
+
+    <!-- =================== BOTTOM CONTROLS =================== -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="50"
+              style="-fx-padding: 20;
+                     -fx-background-color: #ecf0f1;
+                     -fx-border-color: #bdc3c7;
+                     -fx-border-width: 2 0 0 0;">
+
+            <Button fx:id="btnPrev" text="⬅ Câu trước"
+                    onAction="#handlePrev" prefWidth="140"
+                    style="-fx-font-size: 14px;
+                           -fx-background-radius: 6;
+                           -fx-background-color: #3498db;
+                           -fx-text-fill: #2c3e50;
+                           -fx-font-weight: bold;"/>
+
+            <Button text="NỘP BÀI" onAction="#handleSubmit"
+                    prefWidth="160" prefHeight="45"
+                    style="-fx-background-color: linear-gradient(to right, #e74c3c, #c0392b);
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;
+                           -fx-font-size: 16px;
+                           -fx-background-radius: 8;
+                           -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 3);"/>
+
+            <Button fx:id="btnNext" text="Câu sau ➡" onAction="#handleNext"
+                    prefWidth="140"
+                    style="-fx-font-size: 14px;
+                           -fx-background-radius: 6;
+                           -fx-background-color: #3498db;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

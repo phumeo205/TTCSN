@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.ud_quizzi.view.SeeTestScoreScreenController"
+            prefWidth="600" prefHeight="400">
+
+    <!-- TableView hiển thị điểm thi -->
+    <TableView fx:id="tableResults" layoutX="20" layoutY="20" prefWidth="560" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="colExamName" text="Tên đề thi" prefWidth="200"/>
+            <TableColumn fx:id="colScore" text="Điểm" prefWidth="100"/>
+            <TableColumn fx:id="colDate" text="Ngày thi" prefWidth="200"/>
+        </columns>
+    </TableView>
+
+    <!-- Nút quay lại -->
+    <Button fx:id="btnBack" text="Quay lại" layoutX="250" layoutY="340" prefWidth="100" style="-fx-background-color: red"
+            onAction="#handleBack"/>
+</AnchorPane>

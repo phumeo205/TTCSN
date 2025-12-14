@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ud_quizzi.view.ManageResultController"
+            prefWidth="800" prefHeight="600"
+            style="-fx-background-color: linear-gradient(to bottom right, #f0f8ff, #e6f0ff);">
+
+    <VBox spacing="20" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <!-- Tiêu đề -->
+        <Label text="DANH SÁCH ĐỀ THI"
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1E90FF;"/>
+
+        <!-- Bảng dữ liệu -->
+        <TableView fx:id="tableResults" prefHeight="400" prefWidth="760"
+                   style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #87CEFA; -fx-font-size: 14px;">
+            <columns>
+                <TableColumn fx:id="colExamName" text="Tên đề thi" prefWidth="400"/>
+                <TableColumn fx:id="colTotalAttempts" text="Tổng lượt tham gia" prefWidth="180"/>
+                <TableColumn fx:id="colUniqueStudents" text="Số học sinh tham gia" prefWidth="180"/>
+            </columns>
+        </TableView>
+
+        <!-- Nút chức năng -->
+        <HBox alignment="CENTER">
+            <Button text="⬅ Trở lại" onAction="#handleBack" prefWidth="160" prefHeight="45"
+                    style="-fx-background-color: #1E90FF; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-background-radius: 12; -fx-font-size: 16px;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

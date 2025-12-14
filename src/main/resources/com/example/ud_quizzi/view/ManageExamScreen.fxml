@@ -21,9 +21,11 @@
         <TableView fx:id="tableExams" prefHeight="400" prefWidth="960"
                    style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #87CEFA;">
             <columns>
-                <TableColumn fx:id="colName" text="Tên đề thi" prefWidth="450"/>
+                <TableColumn fx:id="colExamID" text="STT" prefWidth="30"/>
+                <TableColumn fx:id="colName" text="Tên đề thi" prefWidth="280"/>
                 <TableColumn fx:id="colDate" text="Ngày tạo" prefWidth="150"/>
                 <TableColumn fx:id="colTime" text="Thời gian làm bài" prefWidth="150"/>
+                <TableColumn fx:id="colByName" text="Người tạo" prefWidth="150"/>
             </columns>
         </TableView>
 

@@ -1,36 +1,34 @@
 package com.example.ud_quizzi.dao;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 public class DatabaseConnection {
-
-    private static final String DB_HOST = "localhost"; // hoặc LAPTOP nếu đúng
-    private static final String DB_INSTANCE = "MSSQLSERVER01"; // để trống nếu dùng mặc định
-    private static final String DB_NAME = "UD_QUIZZI";
-    private static final String DB_USER = "sa";
-    private static final String DB_PASSWORD = "@Nhd05122005";
-
     public static Connection getConnection() {
         try {
+            // Load file properties
+            Properties props = new Properties();
+            InputStream in = DatabaseConnection.class.getClassLoader().getResourceAsStream("database.properties");
+            if (in == null) {
+                System.err.println("Không tìm thấy file database.properties!");
+                return null;
+            }
+            props.load(in);
+
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-            String url;
-            if (DB_INSTANCE.isEmpty()) {
-                url = "jdbc:sqlserver://" + DB_HOST +
-                        ";databaseName=" + DB_NAME +
-                        ";encrypt=false;trustServerCertificate=true;";
-            } else {
-                url = "jdbc:sqlserver://" + DB_HOST + "\\" + DB_INSTANCE +
-                        ";databaseName=" + DB_NAME +
-                        ";encrypt=false;trustServerCertificate=true;";
-            }
+            // Lấy thông tin từ file config
+            String url = props.getProperty("db.url");
+            String user = props.getProperty("db.user");
+            String pass = props.getProperty("db.password");
 
-            Connection conn = DriverManager.getConnection(url, DB_USER, DB_PASSWORD);
-            System.out.println("✅ Kết nối CSDL thành công!");
+            Connection conn = DriverManager.getConnection(url, user, pass);
+            System.out.println("Kết nối CSDL thành công!");
             return conn;
         } catch (Exception e) {
-            System.err.println("❌ Kết nối CSDL thất bại!");
+            System.err.println("Kết nối CSDL thất bại!");
             e.printStackTrace();
             return null;
         }

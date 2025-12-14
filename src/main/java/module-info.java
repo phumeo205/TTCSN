@@ -5,18 +5,19 @@ module com.example.ud_quizzi {
     requires javafx.base;
     requires java.sql;
     requires com.microsoft.sqlserver.jdbc;
+    requires jbcrypt;
 
-    // Mở cho FXML loader (chỉ view và controller)
+    // Mở cho FXML loader
     opens com.example.ud_quizzi.view to javafx.fxml;
     opens com.example.ud_quizzi.controller to javafx.fxml;
 
-    // Nếu bạn có main chạy App (Application), mở thêm package này
-    opens com.example.ud_quizzi.main to javafx.fxml;
+    // Mở package chứa Main
+    opens com.example.ud_quizzi.main to javafx.fxml, javafx.graphics;
+    exports com.example.ud_quizzi.test;
 
-    // Export để dùng giữa các package (controller gọi dao, dao gọi model)
+    // Export để các package gọi nhau
     exports com.example.ud_quizzi.controller;
     exports com.example.ud_quizzi.dao;
     exports com.example.ud_quizzi.model;
     exports com.example.ud_quizzi.view;
-    exports com.example.ud_quizzi.main;
 }

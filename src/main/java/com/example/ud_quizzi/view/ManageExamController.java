@@ -24,33 +24,33 @@ public class ManageExamController {
     @FXML
     private TableView<Exam> tableExams;
     @FXML
+    private TableColumn<Exam, String> colExamID;
+    @FXML
     private TableColumn<Exam, String> colName;
     @FXML
     private TableColumn<Exam, Date> colDate;
     @FXML
     private TableColumn<Exam, String> colTime;
+    @FXML
+    private TableColumn<Exam, String> colByName;
 
     private ExamController examController;
     private ObservableList<Exam> examList;
 
     @FXML
     private void initialize() {
+        colExamID.setCellValueFactory(new PropertyValueFactory<>("examID"));
         colName.setCellValueFactory(new PropertyValueFactory<>("examName"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("testTime"));
+        colByName.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
     }
 
-    /**
-     * Nhận connection từ màn hình cha (sau khi đăng nhập)
-     */
     public void setConnection(Connection conn) {
         this.examController = new ExamController(conn);
         loadExams();
     }
 
-    /**
-     * Tải danh sách đề thi từ CSDL
-     */
     private void loadExams() {
         try {
             if (examController != null) {
@@ -66,9 +66,6 @@ public class ManageExamController {
         }
     }
 
-    /**
-     * Mở form thêm đề thi mới
-     */
     @FXML
     private void handleAdd() {
         try {
@@ -99,9 +96,7 @@ public class ManageExamController {
         }
     }
 
-    /**
-     * Xóa đề thi (nếu cần làm sau)
-     */
+
     @FXML
     private void handleDelete(ActionEvent event) {
         Exam selected = tableExams.getSelectionModel().getSelectedItem();

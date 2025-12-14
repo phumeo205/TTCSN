@@ -19,20 +19,11 @@ import java.sql.Connection;
 
 public class LoginController {
 
-    @FXML
-    private TextField usernameField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Label messageLabel;
-
-    @FXML
-    private ImageView backgroundImage;
-
-    @FXML
-    private ImageView sideImage;
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private Label messageLabel;
+    @FXML private ImageView backgroundImage;
+    @FXML private ImageView sideImage;
 
     @FXML
     private void initialize() {
@@ -41,17 +32,16 @@ public class LoginController {
             URL sideUrl = getClass().getResource("/images/loginImage.png");
 
             if (bgUrl != null) backgroundImage.setImage(new Image(bgUrl.toExternalForm()));
-            else System.out.println("Không tìm thấy backgroundLogin.png");
-
             if (sideUrl != null) sideImage.setImage(new Image(sideUrl.toExternalForm()));
-            else System.out.println("Không tìm thấy loginImage.png");
+
         } catch (Exception e) {
-            System.out.println("Lỗi khi load hình ảnh: " + e.getMessage());
+            System.out.println("Lỗi load hình ảnh: " + e.getMessage());
         }
     }
 
     @FXML
     private void handleLogin() {
+
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
@@ -61,42 +51,56 @@ public class LoginController {
             return;
         }
 
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            if (conn == null) {
-                messageLabel.setStyle("-fx-text-fill: red;");
-                messageLabel.setText("Không thể kết nối database!");
-                return;
-            }
-
+        try {
+            Connection conn = DatabaseConnection.getConnection();
             UserController userController = new UserController(conn);
             User user = userController.login(username, password);
 
             if (user != null) {
-                messageLabel.setStyle("-fx-text-fill: green;");
-                messageLabel.setText("Đăng nhập thành công!");
 
-                // Chọn FXML theo role
-                String fxmlPath;
+                // Lưu session
+                CurrentSession.setLoggedInUser(user);
+
+                FXMLLoader loader;
+                Parent root;
+
+                // Chọn màn hình theo role
                 switch (user.getRole()) {
-                    case "teacher" -> fxmlPath = "/com/example/ud_quizzi/view/TeacherScreen.fxml";
-                    case "student" -> fxmlPath = "/com/example/ud_quizzi/view/StudentScreen.fxml";
-                    default -> fxmlPath = "/com/example/ud_quizzi/view/AdminScreen.fxml";
+
+                    case "teacher" -> {
+                        loader = new FXMLLoader(
+                                getClass().getResource("/com/example/ud_quizzi/view/TeacherScreen.fxml"));
+                        root = loader.load();
+                        TeacherController tc = loader.getController();
+                        tc.setConnection(conn);
+                        tc.setTeacher(user);
+                    }
+
+                    case "student" -> {
+                        loader = new FXMLLoader(
+                                getClass().getResource("/com/example/ud_quizzi/view/StudentScreen.fxml"));
+                        root = loader.load();
+                        StudentController sc = loader.getController();
+                        sc.setConnection(conn);
+                        sc.setStudent(user);
+                    }
+
+                    default -> {  // admin
+                        loader = new FXMLLoader(
+                                getClass().getResource("/com/example/ud_quizzi/view/AdminScreen.fxml"));
+                        root = loader.load();
+                        ManageUserController ac = loader.getController();
+                        ac.setConnection(conn);
+                        // Load data trong initialize hoặc setConnection
+                    }
                 }
 
-                try {
-                    Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-                    Stage stage = (Stage) usernameField.getScene().getWindow();
-                    stage.setScene(new Scene(root));
-                    stage.sizeToScene();
-                    stage.centerOnScreen(); // căn giữa màn hình
-                    stage.setTitle("Dashboard - " + user.getRole());
-                    stage.show();
-
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    messageLabel.setStyle("-fx-text-fill: red;");
-                    messageLabel.setText("Lỗi khi mở màn hình chính!");
-                }
+                // Đổi màn hình
+                Stage stage = (Stage) usernameField.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Dashboard - " + user.getRole());
+                stage.centerOnScreen();
+                stage.show();
 
             } else {
                 messageLabel.setStyle("-fx-text-fill: red;");
@@ -106,7 +110,27 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
             messageLabel.setStyle("-fx-text-fill: red;");
-            messageLabel.setText("Lỗi khi kết nối database!");
+            messageLabel.setText("Lỗi đăng nhập hoặc kết nối database!");
+        }
+    }
+
+    @FXML
+    private void handleRegister() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/ud_quizzi/view/RegisterScreen.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Đăng ký người dùng mới");
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("Không mở được trang đăng ký!");
         }
     }
 }

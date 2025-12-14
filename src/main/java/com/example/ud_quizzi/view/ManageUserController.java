@@ -20,28 +20,19 @@ import java.util.Optional;
 
 public class ManageUserController {
 
-    @FXML
-    private TableView<User> tableUsers;
-    @FXML
-    private TableColumn<User, Integer> colUserID;
-    @FXML
-    private TableColumn<User, String> colUserName;
-    @FXML
-    private TableColumn<User, String> colPassword;
-    @FXML
-    private TableColumn<User, String> colFullName;
-    @FXML
-    private TableColumn<User, String> colEmail;
-    @FXML
-    private TableColumn<User, String> colPhone;
-    @FXML
-    private TableColumn<User, String> colRole;
+    @FXML private TableView<User> tableUsers;
+    @FXML private TableColumn<User, Integer> colUserID;
+    @FXML private TableColumn<User, String> colUserName;
+    @FXML private TableColumn<User, String> colPassword;
+    @FXML private TableColumn<User, String> colFullName;
+    @FXML private TableColumn<User, String> colEmail;
+    @FXML private TableColumn<User, String> colPhone;
+    @FXML private TableColumn<User, String> colRole;
 
     private UserController userController;
     private ObservableList<User> userList;
     private Connection connection;
 
-    // ✅ Khởi tạo cột dữ liệu
     @FXML
     private void initialize() {
         colUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
@@ -53,19 +44,15 @@ public class ManageUserController {
         colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
     }
 
-    // ✅ Nhận connection từ Main hoặc Login
+    // ✅ Giữ nguyên setConnection nhưng gọi loadUsers để hiển thị dữ liệu ngay sau login
     public void setConnection(Connection conn) {
         this.connection = conn;
         this.userController = new UserController(conn);
         loadUsers();
     }
 
-    // ✅ Load danh sách user
     private void loadUsers() {
-        if (userController == null) {
-            showAlert(Alert.AlertType.ERROR, "❌ Chưa kết nối cơ sở dữ liệu!");
-            return;
-        }
+        if (userController == null) return;
         try {
             List<User> list = userController.getAllUsers();
             userList = FXCollections.observableArrayList(list);
@@ -76,26 +63,25 @@ public class ManageUserController {
         }
     }
 
-    // ✅ Mở màn hình đăng ký user
     @FXML
     public void handleAdd(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/ud_quizzi/view/RegisterScreen.fxml"));
             Parent root = loader.load();
 
-            Stage stage = (Stage) tableUsers.getScene().getWindow();
+            Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Đăng ký người dùng mới");
             stage.centerOnScreen();
-            stage.show();
+            stage.showAndWait(); // chờ đóng màn hình đăng ký
 
+            loadUsers(); // ✅ reload dữ liệu sau khi đóng
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "❌ Không thể mở màn hình đăng ký!");
         }
     }
 
-    // ✅ Xóa user
     @FXML
     private void handleDelete(ActionEvent event) {
         User selected = tableUsers.getSelectionModel().getSelectedItem();
@@ -114,14 +100,13 @@ public class ManageUserController {
             boolean success = userController.deleteUser(selected.getUserID());
             if (success) {
                 showAlert(Alert.AlertType.INFORMATION, "✅ Đã xóa người dùng!");
-                loadUsers();
+                loadUsers(); // ✅ reload dữ liệu sau khi xóa
             } else {
                 showAlert(Alert.AlertType.ERROR, "❌ Không thể xóa người dùng!");
             }
         }
     }
 
-    // ✅ Logout -> trở về LoginScreen giữa màn hình
     @FXML
     public void handleLogout(ActionEvent actionEvent) {
         try {
@@ -134,27 +119,22 @@ public class ManageUserController {
             stage.centerOnScreen();
             stage.show();
 
-            // Đóng màn hình hiện tại
             Stage currentStage = (Stage) tableUsers.getScene().getWindow();
             currentStage.close();
 
-            System.out.println("🔒 Đăng xuất thành công!");
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "❌ Không thể tải màn hình đăng nhập!");
         }
     }
 
-    // ✅ Hiển thị thông báo
     private void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type);
-        alert.setTitle("Thông báo");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
-    // ✅ Làm mới bảng user
     public void refreshTable() {
         loadUsers();
     }

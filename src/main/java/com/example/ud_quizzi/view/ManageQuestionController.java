@@ -46,7 +46,7 @@ public class ManageQuestionController {
         loadQuestions();
     }
 
-    private void loadQuestions() {
+    public void loadQuestions() {
         try {
             if (questionController != null) {
                 List<Question> list = questionController.getAllQuestions();
@@ -60,18 +60,19 @@ public class ManageQuestionController {
     }
 
     @FXML
-    private void handleAdd() {
+    private void handleAdd(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/ud_quizzi/view/AddQuestionScreen.fxml"));
             Parent root = loader.load();
 
             AddQuestionController addController = loader.getController();
-            addController.setConnection(this.connection);
-            addController.setManageController(this);
+            addController.setConnection(this.connection);  // truyền Connection
+            addController.setManageController(this);      // truyền reference để refresh bảng
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Thêm Câu Hỏi");
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException e) {
@@ -111,15 +112,15 @@ public class ManageQuestionController {
         stage.close();
     }
 
+    public void refreshTable() {
+        loadQuestions();
+    }
+
     private void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type);
         alert.setTitle("Thông báo");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public void refreshTable() {
-        loadQuestions();
     }
 }

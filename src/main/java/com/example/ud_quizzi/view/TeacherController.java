@@ -3,6 +3,7 @@ package com.example.ud_quizzi.view;
 import com.example.ud_quizzi.controller.QuestionController;
 import com.example.ud_quizzi.controller.ExamController;
 import com.example.ud_quizzi.dao.DatabaseConnection;
+import com.example.ud_quizzi.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,7 @@ public class TeacherController {
     private QuestionController questionController;
     private ExamController examController;
     private Connection conn;
+    private User teacher;
 
     @FXML
     private void initialize() {
@@ -74,7 +76,21 @@ public class TeacherController {
 
     @FXML
     private void handleManageResults(ActionEvent event) {
-        System.out.println("📊 Chức năng quản lý kết quả (chưa triển khai)");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/ud_quizzi/view/ManageResultScreen.fxml"));
+            Parent root = loader.load();
+
+            ManageResultController controller = loader.getController();
+            controller.setConnection(conn);
+
+            Stage stage = new Stage();
+            stage.setTitle("Quản lí kết quả");
+            stage.setScene(new Scene(root));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -97,5 +113,13 @@ public class TeacherController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setConnection(Connection conn) {
+        this.conn = conn;
+    }
+
+    public void setTeacher(User user) {
+        this.teacher = teacher;
     }
 }

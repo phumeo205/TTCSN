@@ -4,6 +4,7 @@ import com.example.ud_quizzi.dao.ResultDAO;
 import com.example.ud_quizzi.model.Result;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -39,5 +40,13 @@ public class ResultController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public int getTotalAttemptsForExam(int examID) {
+        return resultDAO.getTotalAttemptsForExam(examID);
+    }
+
+    public int getUniqueStudentsForExam(int examID) {
+        return resultDAO.getUniqueStudentsForExam(examID);
     }
 }

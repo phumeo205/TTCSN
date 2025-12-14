@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ud_quizzi.view.SelectTheExamController"
+            prefWidth="600" prefHeight="550"
+            style="-fx-background-color: linear-gradient(to bottom right, #f0f8ff, #e6f0ff);">
+
+    <VBox spacing="20" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <!-- Header: Tiêu đề -->
+        <Label text="Danh sách đề thi"
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1E90FF;"/>
+
+        <!-- Bảng dữ liệu -->
+        <TableView fx:id="tableExams" prefHeight="400" prefWidth="560"
+                   style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #87CEFA;">
+            <columns>
+                <TableColumn fx:id="colExamName" text="Tên bài thi" prefWidth="270"/>
+                <TableColumn fx:id="colDate" text="Ngày tạo" prefWidth="150"/>
+                <TableColumn fx:id="colTime" text="Thời gian làm bài" prefWidth="140"/>
+            </columns>
+        </TableView>
+
+        <!-- Nút Quay lại -->
+        <Button fx:id="btnBack" text="◀ Quay lại"
+                onAction="#handleBack"
+                style="-fx-background-color: red; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 20;"/>
+    </VBox>
+</AnchorPane>

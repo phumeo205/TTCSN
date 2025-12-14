@@ -1,7 +1,6 @@
 package com.example.ud_quizzi.view;
 
 import com.example.ud_quizzi.controller.QuestionController;
-import com.example.ud_quizzi.view.ManageQuestionController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,17 +11,7 @@ import java.sql.Connection;
 public class AddQuestionController {
 
     @FXML
-    private TextField contentField;
-    @FXML
-    private TextField optionAField;
-    @FXML
-    private TextField optionBField;
-    @FXML
-    private TextField optionCField;
-    @FXML
-    private TextField optionDField;
-    @FXML
-    private TextField answerField;
+    private TextField contentField, optionAField, optionBField, optionCField, optionDField, answerField;
     @FXML
     private Label messageLabel;
 
@@ -56,7 +45,6 @@ public class AddQuestionController {
         String optionD = optionDField.getText().trim();
         String answer = answerField.getText().trim().toUpperCase();
 
-        // ✅ Kiểm tra đầu vào
         if (content.isEmpty() || optionA.isEmpty() || optionB.isEmpty()
                 || optionC.isEmpty() || optionD.isEmpty() || answer.isEmpty()) {
             messageLabel.setText("Vui lòng điền đầy đủ thông tin!");
@@ -73,9 +61,15 @@ public class AddQuestionController {
         if (success) {
             messageLabel.setText("✅ Thêm câu hỏi thành công!");
             clearFields();
+
+            // 🔁 Load lại bảng trong ManageQuestionController
             if (manageController != null) {
-                manageController.refreshTable(); // 🔁 làm mới danh sách nếu cần
+                manageController.refreshTable();
             }
+
+            // 🔒 Đóng cửa sổ thêm câu hỏi
+            Stage stage = (Stage) contentField.getScene().getWindow();
+            stage.close();
         } else {
             messageLabel.setText("❌ Thêm câu hỏi thất bại!");
         }
@@ -83,8 +77,8 @@ public class AddQuestionController {
 
     @FXML
     private void handleBack(ActionEvent event) {
-        Stage currentStage = (Stage) contentField.getScene().getWindow();
-        currentStage.close();
+        Stage stage = (Stage) contentField.getScene().getWindow();
+        stage.close();
     }
 
     private void clearFields() {
